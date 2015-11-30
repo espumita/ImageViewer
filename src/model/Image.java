@@ -1,6 +1,13 @@
 package model;
 
 
-public interface Image {
+
+public class Image {
+    private Image next;
+    private Image prev;
+    private BitMap bitmap;
+
+
+
 
 }

@@ -1,6 +1,8 @@
 package view.persistance;
 
 
-public interface ImageReader {
+import model.Image;
 
+public interface ImageReader {
+    Image read(String path);
 }

@@ -2,5 +2,8 @@ package application;
 
 import view.ui.ImageDisplay;
 
-public class ImagePanel implements ImageDisplay {
+import javax.swing.*;
+
+public class ImagePanel extends JPanel implements ImageDisplay{
+
 }
