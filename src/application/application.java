@@ -1,18 +1,35 @@
 package application;
 
+import control.Command;
+import control.NextImageCommand;
+import control.PrevImageCommand;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class application extends JFrame{
+    private Map<String, Command> commands = new HashMap<>();
     public static void main(String[] args) throws IOException {
         new application().setVisible(true);
     }
 
     public application() throws HeadlessException, IOException {
+        addCommands();
+        deployUI();
+    }
+
+    private void addCommands() {
+        commands.put("Next", new NextImageCommand());
+        commands.put("Prev", new PrevImageCommand());
+    }
+
+    private void deployUI() throws IOException {
         this.setTitle("Image viewer");
         this.setSize(new Dimension(500,500));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
