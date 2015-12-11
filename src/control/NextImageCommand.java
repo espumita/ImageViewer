@@ -3,7 +3,7 @@ package control;
 import view.ui.ImageDisplay;
 
 public class NextImageCommand implements Command{
-    private ImageDisplay display;
+    private final ImageDisplay display;
 
     public NextImageCommand(ImageDisplay display) {
         this.display = display;
@@ -11,6 +11,6 @@ public class NextImageCommand implements Command{
 
     @Override
     public void execute() {
-
+        display.show(display.image().next());
     }
 }
