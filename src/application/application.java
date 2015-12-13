@@ -5,14 +5,16 @@ import control.NextImageCommand;
 import control.PrevImageCommand;
 import model.Image;
 import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Application extends JFrame{
     private Map<String, Command> commands = new HashMap<>();
     private ImageDisplay applicationDisplayPanel;
+    private int xMousePosition;
 
     public static void main(String[] args) {
         new Application().setVisible(true);
@@ -39,6 +41,18 @@ public class Application extends JFrame{
 
     private ImageDisplay imagePanel() {
         ImageDisplay panel = new ImageDisplay(image());
+        panel.addMouseListener(new MouseInputAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                xMousePosition = e.getX();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if((xMousePosition - e.getX()) >= 0 ) commands.get("Next").execute();
+                else commands.get("Prev").execute();
+            }
+        });
         applicationDisplayPanel = panel;
         return panel;
     }
@@ -57,19 +71,13 @@ public class Application extends JFrame{
 
     private JButton nextButton() {
         JButton nextButton = new JButton(">");
-        nextButton.addActionListener(doCommand("Next"));
+        nextButton.addActionListener(e -> commands.get("Next").execute());
         return nextButton;
     }
 
     private JButton prevButton() {
         JButton prevButton = new JButton("<");
-        prevButton.addActionListener(doCommand("Prev"));
+        prevButton.addActionListener(e -> commands.get("Prev").execute());
         return prevButton;
     }
-
-    private ActionListener doCommand(String operation) {
-        return e -> commands.get(operation).execute();
-    }
-
-
 }
