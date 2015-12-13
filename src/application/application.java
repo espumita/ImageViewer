@@ -4,44 +4,43 @@ import control.Command;
 import control.NextImageCommand;
 import control.PrevImageCommand;
 import model.Image;
-import view.ui.ImageDisplay;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class application extends JFrame{
+public class Application extends JFrame{
     private Map<String, Command> commands = new HashMap<>();
-    private ImageDisplay applicationPanel;
-    public static void main(String[] args) throws IOException {
-        new application().setVisible(true);
+    private ImageDisplay applicationDisplayPanel;
+
+    public static void main(String[] args) {
+        new Application().setVisible(true);
     }
 
-    public application() throws HeadlessException, IOException {
+    public Application() throws HeadlessException {
         deployUI();
         addCommands();
     }
 
     private void addCommands() {
-        commands.put("Next", new NextImageCommand(applicationPanel));
-        commands.put("Prev", new PrevImageCommand(applicationPanel));
+        commands.put("Next",new NextImageCommand(applicationDisplayPanel));
+        commands.put("Prev",new PrevImageCommand(applicationDisplayPanel));
     }
 
-    private void deployUI() throws IOException {
-        this.setTitle("Image viewer");
-        this.setMinimumSize(new Dimension(500,500));
+    private void deployUI() {
+        this.setTitle("Image Viewer");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setMinimumSize(new Dimension(500,500));
+        this.setLocationRelativeTo(null);
         this.getContentPane().add(imagePanel());
         this.add(toolBar(),BorderLayout.SOUTH);
     }
 
-    private ImagePanel imagePanel() {
-        ImagePanel imagePanel = new ImagePanel(image());
-        applicationPanel = imagePanel;
-        return imagePanel;
+    private ImageDisplay imagePanel() {
+        ImageDisplay panel = new ImageDisplay(image());
+        applicationDisplayPanel = panel;
+        return panel;
     }
 
     private Image image() {
@@ -49,27 +48,28 @@ public class application extends JFrame{
     }
 
     private JMenuBar toolBar() {
-        JMenuBar barr = new JMenuBar();
-        barr.setLayout(new FlowLayout(FlowLayout.CENTER));
-        barr.add(prevButton());
-        barr.add(nextButton());
-        return  barr;
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.setLayout(new FlowLayout(FlowLayout.CENTER));
+        menuBar.add(prevButton());
+        menuBar.add(nextButton());
+        return menuBar;
+    }
+
+    private JButton nextButton() {
+        JButton nextButton = new JButton(">");
+        nextButton.addActionListener(doCommand("Next"));
+        return nextButton;
     }
 
     private JButton prevButton() {
-        JButton prev = new JButton("<");
-        prev.addActionListener(doCommand("Prev"));
-        return prev;
+        JButton prevButton = new JButton("<");
+        prevButton.addActionListener(doCommand("Prev"));
+        return prevButton;
     }
 
     private ActionListener doCommand(String operation) {
         return e -> commands.get(operation).execute();
     }
 
-    private JButton nextButton() {
-        JButton next = new JButton(">");
-        next.addActionListener(doCommand("Next"));
-        return next;
-    }
 
 }

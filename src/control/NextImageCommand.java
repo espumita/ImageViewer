@@ -2,7 +2,7 @@ package control;
 
 import view.ui.ImageDisplay;
 
-public class NextImageCommand implements Command{
+public class NextImageCommand implements Command {
     private final ImageDisplay display;
 
     public NextImageCommand(ImageDisplay display) {
