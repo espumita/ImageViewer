@@ -6,11 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class ImageDisplay extends JPanel implements view.ui.ImageDisplay {
+public class ImagePanel extends JPanel implements view.ui.ImageDisplay {
 
     private Image image;
 
-    public ImageDisplay(Image image) {
+    public ImagePanel(Image image) {
         this.image = image;
     }
 

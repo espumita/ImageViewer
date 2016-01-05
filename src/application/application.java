@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class Application extends JFrame{
     private Map<String, Command> commands = new HashMap<>();
-    private ImageDisplay applicationDisplayPanel;
+    private ImagePanel applicationDisplayPanel;
     private int xMousePosition;
 
     public static void main(String[] args) {
@@ -39,8 +39,8 @@ public class Application extends JFrame{
         this.add(toolBar(),BorderLayout.SOUTH);
     }
 
-    private ImageDisplay imagePanel() {
-        ImageDisplay panel = new ImageDisplay(image());
+    private ImagePanel imagePanel() {
+        ImagePanel panel = new ImagePanel(image());
         panel.addMouseListener(new MouseInputAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
